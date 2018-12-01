@@ -75,7 +75,7 @@ public class EspecialidadeDAO {
                 especialidades.add(esp);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Falha na Seleção de Medicos.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falha na Seleção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
             //System.err.println("Erro: " + ex);
         } finally {
             ic.closeConnection(con, stmt, rs);
@@ -96,7 +96,7 @@ public class EspecialidadeDAO {
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Falha na Seleção de Medicos.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falha na alteração dados.", "Erro", JOptionPane.ERROR_MESSAGE);
             System.err.println("Erro: " + ex);
             return false;
         } finally {

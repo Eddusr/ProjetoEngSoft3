@@ -6,7 +6,6 @@
 package model.dao;
 
 import model.bean.Convenio;
-import model.bean.Especialidade;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
@@ -35,6 +34,7 @@ public class ConvenioDAOTest {
         
     }
     @Test
+    @Ignore
     public void select(){
     
         ConvenioDAO dao = new ConvenioDAO("mysql");
@@ -44,5 +44,30 @@ public class ConvenioDAOTest {
             
         }
     }
+    @Test
+    @Ignore
+    public void update(){
+        
+        ConvenioDAO dao = new ConvenioDAO("mysql");
+        int cod = 2;
+        Convenio conv = new Convenio(0, "Amil", "Prata");
+        if(dao.alterar(conv, cod)){
+            System.out.println("alterado com sucesso");
+        }
+        else
+            fail("Falha ao atualizar");
+    }
     
+    @Test
+    public void delete (){
+    
+        ConvenioDAO dao = new ConvenioDAO("mysql");
+        int cod = 1;
+        if (dao.deletar(cod)){
+            System.out.println("deletado");
+        }
+        else
+            fail("Falha ao deletar");
+        
+    }
 }

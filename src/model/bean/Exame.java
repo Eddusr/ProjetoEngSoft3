@@ -5,6 +5,8 @@
  */
 package model.bean;
 
+import java.util.List;
+
 /**
  *
  * @author Eduardo
@@ -15,26 +17,20 @@ public class Exame {
     private String nome;
     private String descricao;
     private String tipo;
-    //private Material material;
+    private List<Material> materiais;
 
     public Exame() {
-        this.codigo = 0;
-        this.nome = "";
-        this.descricao = "";
-        this.tipo = "";
     }
-    public Exame(int codigo, String nome, String descricao, String tipo) {
+
+    public Exame(int codigo, String nome, String descricao, String tipo, List<Material> materiais) {
         this.codigo = codigo;
         this.nome = nome;
         this.descricao = descricao;
         this.tipo = tipo;
+        this.materiais = materiais;
     }
-    public Exame(Exame a) {
-        this.codigo = a.codigo;
-        this.nome = a.nome;
-        this.descricao = a.descricao;
-        this.tipo = a.tipo;
-    }
+
+    
 
     public int getCodigo() {
         return codigo;
@@ -60,5 +56,15 @@ public class Exame {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
+    public List<Material> getMateriais() {
+        return materiais;
+    }
+
+    public void setMateriais(List<Material> materiais) {
+        this.materiais = materiais;
+    }
+    
+    
 
 }

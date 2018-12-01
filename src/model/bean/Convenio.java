@@ -31,6 +31,10 @@ public class Convenio {
         this.cobertura = a.cobertura;
     }
 
+    public Convenio(int i, String psicologo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int getCodigo() {
         return codigo;
     }

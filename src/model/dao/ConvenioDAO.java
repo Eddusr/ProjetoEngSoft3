@@ -13,11 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.bean.Convenio;
-import model.bean.Especialidade;
 
 /**
  *
@@ -80,11 +77,52 @@ public class ConvenioDAO {
             }
                     
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Falha na Inserção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falha na seleção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
             System.err.println("Erro: " + ex);
         } finally {
             ic.closeConnection(con, stmt, rs);
         }
         return convenios;       
+    }
+    
+    public boolean alterar (Convenio conv, int cod){
+        String sql = "UPDATE convenios " +
+                     "SET convnome = ?, convcober = ? " +
+                     "WHERE convcod = " + cod;
+        
+        PreparedStatement stmt = null;
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, conv.getNome());
+            stmt.setString(2, conv.getCobertura());
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha na Alteração de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+            System.err.println("Erro: " + ex);
+            return false;
+        } finally {
+            ic.closeConnection(con, stmt);
+        }
+    }
+    
+    public boolean deletar(int delCOD) {
+
+        String sql = "DELETE FROM convenios "
+                + "WHERE convcod = " + delCOD;
+        
+        PreparedStatement stmt = null;
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao deletar dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+            System.err.println("Erro: " + ex);
+            return false;
+        } finally {
+            ic.closeConnection(con, stmt);
+        }
+        
     }
 }
