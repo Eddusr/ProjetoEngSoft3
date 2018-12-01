@@ -13,32 +13,41 @@ public class Medico {
     
     private String crm;
     private String nome;
-    //private Especialidade especialidade;
+    private Especialidade especialidade;
 
     public Medico() {
-        this.crm = "";
-        this.nome = "";
     }
-    public Medico(String crm, String nome) {
+
+    public Medico(String crm, String nome, Especialidade especialidade) {
         this.crm = crm;
         this.nome = nome;
+        this.especialidade = especialidade;
     }
-    public Medico(Medico a) {
-        this.crm = a.crm;
-        this.nome = a.nome;
-    }
+
+    
 
     public String getCrm() {
         return crm;
     }
-    public void setCrm(String crm) {
-        this.crm = crm;
-    }
+
     public String getNome() {
         return nome;
     }
+
+    public Especialidade getEspecialidade() {
+        return especialidade;
+    }
+
+    public void setCrm(String crm) {
+        this.crm = crm;
+    }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
+
+    public void setEspecialidade(Especialidade especialidade) {
+        this.especialidade = especialidade;
+    }
+   
 }

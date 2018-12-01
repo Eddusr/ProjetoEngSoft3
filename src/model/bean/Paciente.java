@@ -13,7 +13,7 @@ public class Paciente {
     
     private String cpf;
     private String nome;
-    private char sexo;
+    private String sexo;
     private int idade;
     //private Telefone telefone;
         
@@ -22,7 +22,7 @@ public class Paciente {
         this.nome = "";
         this.idade = 0;
     }   
-    public Paciente( String cpf, String nome, char sexo, int idade ) {
+    public Paciente( String cpf, String nome, String sexo, int idade ) {
         this.cpf = cpf;
         this.nome = nome;
         this.sexo = sexo;
@@ -49,10 +49,10 @@ public class Paciente {
         this.nome = nome;
     }
 
-    public char getSexo() {
+    public String getSexo() {
         return sexo;
     }
-    public void setSexo(char sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 

@@ -15,7 +15,7 @@ import java.sql.SQLException;
  *
  * @author Luiz Oliveira
  */
-public class ConnectionFactory {
+public class ConnectionMySQL extends ConnectionInterface{
  
     /*
     private static final String DRIVER = "com.mysql.jdbc.Driver";
@@ -24,12 +24,13 @@ public class ConnectionFactory {
     private static final String PASS = "1234";
     */
     
-    public static Connection getConnection(){
+    @Override
+    public Connection getConnection(){
         
         try {
             //Class.forName("DriverManager");
             Class.forName("com.mysql.jdbc.Driver"); 
-            return DriverManager.getConnection("jdbc:mysql://localhost/projetodb","root","");
+            return DriverManager.getConnection("jdbc:mysql://localhost/bdclinica","root","1234");
 
             
         } catch (ClassNotFoundException | SQLException ex) {
@@ -38,7 +39,8 @@ public class ConnectionFactory {
         }
     }
     
-    public static void closeConnection(Connection con){
+    @Override
+    public void closeConnection(Connection con){
         
         if (con != null){
             try {
@@ -48,7 +50,8 @@ public class ConnectionFactory {
             }
         }
     }
-    public static void closeConnection(Connection con, PreparedStatement stmt){
+    @Override
+    public void closeConnection(Connection con, PreparedStatement stmt){
         
         if (stmt != null){
             try {
@@ -59,7 +62,8 @@ public class ConnectionFactory {
         }
         closeConnection(con);
     }
-    public static void closeConnection(Connection con, PreparedStatement stmt, ResultSet rs){
+    @Override
+    public void closeConnection(Connection con, PreparedStatement stmt, ResultSet rs){
         
         if (rs != null){
             try {
