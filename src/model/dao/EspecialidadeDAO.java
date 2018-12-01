@@ -15,108 +15,99 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.bean.Especialidade;
-import model.bean.Medico;
 
 /**
  *
  * @author Luiz Oliveira
  */
-public class MedicoDAO {
+public class EspecialidadeDAO {
     final private String nomeDB;
     public ConnectionInterface ic;
     private Connection con;
 
-    public MedicoDAO() {
+    public EspecialidadeDAO () {
         this.nomeDB = null;
         ConnectionFactory cf = new ConnectionFactory();
         this.ic = cf.getDB("");
     }
     
-    public MedicoDAO(String nome) {
+    public EspecialidadeDAO (String nome) {
         this.nomeDB = nome;
         ConnectionFactory cf = new ConnectionFactory();
         this.ic = cf.getDB(nome);
         this.con = ic.getConnection();
     }
     
-    public boolean save(Medico medico) {
-        String sql = "INSERT INTO medicos (medcrm, mednome, med_espcod)" +
-                     "VALUES (?, ?, ?)";
+    public boolean save (Especialidade esp){
+        String sql = "INSERT IGNORE INTO especialidades (espnome) " + 
+                     "VALUES (?)";
         PreparedStatement stmt = null;
+        
         try {
             stmt = con.prepareStatement(sql);
-            stmt.setString(1, medico.getCrm());
-            stmt.setString(2, medico.getNome());
-            stmt.setInt(3, medico.getEspecialidade().getCodigo());
-            
+            stmt.setString(1, esp.getNome());
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha na Inserção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
-            //System.err.println("Erro: " + ex);
+            System.err.println("Erro: " + ex);
             return false;
         } finally {
             ic.closeConnection(con, stmt);
         }
+        
     }
     
-    public List<Medico> selecionar (){
- 
-        String sql = "SELECT * FROM SelectMed";
+    public List<Especialidade> selecionar (){
+        String sql = "SELECT * FROM especialidades";
         
-        List<Medico> medicos = new ArrayList<>();        
+        List<Especialidade> especialidades = new ArrayList<>();        
         PreparedStatement stmt = null;
         ResultSet rs = null;
+        
         try {
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
             while(rs.next()){
-                Medico med = new Medico();
-                med.setCrm(rs.getString("medcrm"));
-                med.setNome(rs.getString("mednome"));
                 Especialidade esp = new Especialidade();
                 esp.setCodigo(rs.getInt("espcod"));
                 esp.setNome(rs.getString("espnome"));
-                med.setEspecialidade(esp);
-                medicos.add(med);               
+                especialidades.add(esp);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha na Seleção de Medicos.", "Erro", JOptionPane.ERROR_MESSAGE);
+            //System.err.println("Erro: " + ex);
         } finally {
             ic.closeConnection(con, stmt, rs);
         }
-        return medicos;
+        return especialidades;
         
     }
     
-    public boolean alterar (Medico medico, String oldCRM) {
-        String sql = "UPDATE medicos " + 
-                     "SET medcrm = ?, mednome = ?, " +
-                     "med_espcod = (select espcod from especialidades where espnome = ?) " +
-                     "WHERE medcrm = " + oldCRM;
-        PreparedStatement stmt = null;
+    public boolean alterar (Especialidade esp, int cod){
+        String sql = "UPDATE especialidades " +
+                     "SET espnome = ? " +
+                     "WHERE espcod = " + cod;
         
+        PreparedStatement stmt = null;
         try {
             stmt = con.prepareStatement(sql);
-            stmt.setString(1, medico.getCrm());
-            stmt.setString(2, medico.getNome());
-            stmt.setString(3, medico.getEspecialidade().getNome());
+            stmt.setString(1, esp.getNome());
             stmt.executeUpdate();
             return true;
-            
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Falha na Alteração de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
-            //System.err.println("Erro: " + ex);
+            JOptionPane.showMessageDialog(null, "Falha na Seleção de Medicos.", "Erro", JOptionPane.ERROR_MESSAGE);
+            System.err.println("Erro: " + ex);
             return false;
         } finally {
             ic.closeConnection(con, stmt);
         }
     }
-        
-        public boolean deletar(String delCRM) {
+    
+    public boolean deletar(int delCOD) {
 
-        String sql = "DELETE FROM medicos "
-                + "WHERE medcrm = " + delCRM;
+        String sql = "DELETE FROM especialidades "
+                + "WHERE espcod = " + delCOD;
         
         PreparedStatement stmt = null;
         try {
@@ -132,4 +123,5 @@ public class MedicoDAO {
         }
         
     }
+    
 }

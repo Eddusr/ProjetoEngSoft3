@@ -102,4 +102,24 @@ public class PacienteDAO {
         }
         
     }
+    
+    public boolean deletar(String delCPF) {
+
+        String sql = "DELETE FROM pacientes "
+                + "WHERE paccpf = " + delCPF;
+        
+        PreparedStatement stmt = null;
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao deletar dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+            System.err.println("Erro: " + ex);
+            return false;
+        } finally {
+            ic.closeConnection(con, stmt);
+        }
+        
+    }
 }

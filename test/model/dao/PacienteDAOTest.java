@@ -50,6 +50,7 @@ public class PacienteDAOTest {
     }
     
     @Test
+    @Ignore
     public void update(){
         Paciente pac = new Paciente("43333177897", "Luiz Roberto", "M", 23);
         PacienteDAO dao = new PacienteDAO("mysql");
@@ -57,5 +58,18 @@ public class PacienteDAOTest {
             System.out.println("Alteracao realizada com sucesso");
         }else
             fail("Erro na alteracao de dados");
+    }
+    
+    @Test
+    public void delete (){
+    
+        PacienteDAO dao = new PacienteDAO("mysql");
+        String cpf = "456123789";
+        if (dao.deletar(cpf)){
+            System.out.println("deletado");
+        }
+        else
+            fail("Falha ao deletar");
+        
     }
 }

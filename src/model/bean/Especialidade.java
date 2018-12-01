@@ -15,18 +15,13 @@ public class Especialidade {
     private String nome;
 
     public Especialidade() {
-        this.codigo = 0;
-        this.nome = "";
     }
+    
     public Especialidade(int codigo, String nome) {
         this.codigo = codigo;
         this.nome = nome;
     }
-    public Especialidade(Especialidade a) {
-        this.codigo = a.codigo;
-        this.nome = a.nome;
-    }
-
+  
     public int getCodigo() {
         return codigo;
     }

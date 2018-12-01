@@ -5,8 +5,6 @@
  */
 package model.dao;
 
-import java.util.ArrayList;
-import java.util.List;
 import model.bean.Especialidade;
 import model.bean.Medico;
 import static org.junit.Assert.fail;
@@ -39,6 +37,7 @@ public class MedicoDAOTest {
     }
     
     @Test
+    @Ignore
     public void select(){
     
         MedicoDAO dao = new MedicoDAO("mysql");
@@ -47,7 +46,33 @@ public class MedicoDAOTest {
             System.out.println("CRM: " + m.getCrm() + " Nome: " + m.getNome() + " Esp: " + m.getEspecialidade().getNome());
             
         }
+    }
+    
+    @Test
+    @Ignore
+    public void update(){
         
+        MedicoDAO dao = new MedicoDAO("mysql");
+        String oldCRM = "789456";
+        Especialidade esp = new Especialidade(3, "Urologista");
+        Medico med = new Medico("156321123", "Teste Update3", esp);
+        if(dao.alterar(med, oldCRM)){
+            System.out.println("alterado com sucesso");
+        }
+        else
+            fail("Falha ao atualizar");
+    }
+    
+    @Test
+    public void delete (){
+    
+        MedicoDAO dao = new MedicoDAO("mysql");
+        String crm = "123456";
+        if (dao.deletar(crm)){
+            System.out.println("deletado");
+        }
+        else
+            fail("Falha ao deletar");
         
     }
 }
