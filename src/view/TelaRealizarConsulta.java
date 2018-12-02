@@ -221,10 +221,9 @@ public class TelaRealizarConsulta extends javax.swing.JFrame {
         if (tableConsulta.getSelectedRow() != -1){
             tfConsulta.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString());
             tfNome.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 1).toString());
-            tfVtotal.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 2).toString());
+           
             cfSexo.setSelectedItem(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 3).toString());
-            tfConvenio.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 4).toString());
-            tfCobertura.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 5).toString());
+          
         }
     }//GEN-LAST:event_tableConsultaMouseClicked
 
@@ -233,10 +232,9 @@ public class TelaRealizarConsulta extends javax.swing.JFrame {
         if (tableConsulta.getSelectedRow() != -1){
             tfConsulta.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString());
             tfNome.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 1).toString());
-            tfVtotal.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 2).toString());
+           
             cfSexo.setSelectedItem(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 3).toString());
-            tfConvenio.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 4).toString());
-            tfCobertura.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 5).toString());
+           
         }
 
     }//GEN-LAST:event_tableConsultaKeyReleased
@@ -267,7 +265,7 @@ public class TelaRealizarConsulta extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         ControlConvenio control = new ControlConvenio();
-        if (!(control.save(tfConvenio.getText(), tfCobertura.getText()))){
+        /*if (!(control.save(tfConvenio.getText(), tfCobertura.getText()))){
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar convenio.");
         }
         else {
@@ -281,7 +279,7 @@ public class TelaRealizarConsulta extends javax.swing.JFrame {
                 dtmPacientes.addRow(dados);
             }
             
-        }
+        }*/
             
         //ControlPaciente control = new ControlPaciente();
         
@@ -306,7 +304,7 @@ public class TelaRealizarConsulta extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         ControlConvenio control = new ControlConvenio();
-        if (!(control.save(tfConvenio.getText(), tfCobertura.getText()))){
+        /*if (!(control.save(tfConvenio.getText(), tfCobertura.getText()))){
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar convenio.");
         }
         else {
@@ -321,7 +319,7 @@ public class TelaRealizarConsulta extends javax.swing.JFrame {
                 dtmPacientes.addRow(dados);
             }
 
-        }
+        }*/
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**

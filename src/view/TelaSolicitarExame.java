@@ -359,8 +359,7 @@ public class TelaSolicitarExame extends javax.swing.JFrame {
         if (tableConsulta.getSelectedRow() != -1){
             tfCPF.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString());
             tfNome.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 1).toString());
-            tfIdade.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 2).toString());
-            cfSexo.setSelectedItem(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 3).toString());
+          
             tfConvenio.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 4).toString());
             tfCobertura.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 5).toString());
         }
@@ -371,8 +370,7 @@ public class TelaSolicitarExame extends javax.swing.JFrame {
         if (tableConsulta.getSelectedRow() != -1){
             tfCPF.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString());
             tfNome.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 1).toString());
-            tfIdade.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 2).toString());
-            cfSexo.setSelectedItem(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 3).toString());
+           
             tfConvenio.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 4).toString());
             tfCobertura.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 5).toString());
         }
@@ -410,14 +408,14 @@ public class TelaSolicitarExame extends javax.swing.JFrame {
         }
         else {
             ControlPaciente control2 = new ControlPaciente();
-            if (!(control2.save(tfCPF.getText(), tfNome.getText(), cfSexo.getSelectedItem().toString(), Integer.parseInt(tfIdade.getText()), tfConvenio.getText(), tfCobertura.getText()))){
+           /* if (!(control2.save(tfCPF.getText(), tfNome.getText(), tfConvenio.getText(), tfCobertura.getText()))){
                 JOptionPane.showMessageDialog(null, "Erro ao cadastrar paciente.");
             }
             else {
                 DefaultTableModel dtmPacientes = (DefaultTableModel) tableConsulta.getModel();
-                Object[] dados = {tfCPF.getText(), tfNome.getText(), tfIdade.getText(), cfSexo.getSelectedItem(), tfConvenio.getText(), tfCobertura.getText()};
+                Object[] dados = {tfCPF.getText(), tfNome.getText(), tfConvenio.getText(), tfCobertura.getText()};
                 dtmPacientes.addRow(dados);
-            }
+            }*/
             
         }
             
@@ -434,14 +432,14 @@ public class TelaSolicitarExame extends javax.swing.JFrame {
         else {
             ControlPaciente control2 = new ControlPaciente();
             String oldra = tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString();
-            if (!(control2.update(tfCPF.getText(), tfNome.getText(), cfSexo.getSelectedItem().toString(), Integer.parseInt(tfIdade.getText()), tfConvenio.getText(), tfCobertura.getText(), oldra))){
+          /*  if (!(control2.update(tfCPF.getText(), tfNome.getText(), tfConvenio.getText(), tfCobertura.getText(), oldra))){
                 JOptionPane.showMessageDialog(null, "Erro ao cadastrar paciente.");
             }
             else {
                 DefaultTableModel dtmPacientes = (DefaultTableModel) tableConsulta.getModel();
                 Object[] dados = {tfCPF.getText(), tfNome.getText(), tfIdade.getText(), cfSexo.getSelectedItem(), tfConvenio.getText(), tfCobertura.getText()};
                 dtmPacientes.addRow(dados);
-            }
+            }*/
             
         }
     }//GEN-LAST:event_jButton4ActionPerformed
