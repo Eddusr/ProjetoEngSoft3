@@ -6,6 +6,7 @@
 package view;
 
 import control.ControlLogin;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
@@ -40,6 +41,12 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel1KeyPressed(evt);
+            }
+        });
 
         jLabel1.setText("Login");
 
@@ -135,6 +142,7 @@ public class TelaLogin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLoginActionPerformed
@@ -147,16 +155,33 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void tfSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfSenhaKeyPressed
 
-        /*if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            if (tfLogin.getText().equals("admin") && tfSenha.getText().equals("1234")){
-                new TelaPrincipalMDI().setVisible(true);
-                this.dispose();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            ControlLogin cl = new ControlLogin();
+            int userP = cl.Checkin(tfLogin.getText(), tfSenha.getText());
+            switch (userP) {
+                //estancia tela principal com cardlayout de Gerente
+                case 1:
+                    new TelaInicial("telaGer").setVisible(true);
+                    this.dispose();
+                    break;
+                //estancia tela principal com cardlayout de Recepcionista
+                case 2:
+                    new TelaInicial("telaRec").setVisible(true);
+                    this.dispose();
+                    break;
+                //estancia tela principal com cardlayout de Medico
+                case 3:
+                    new TelaInicial("telaMed").setVisible(true);
+                    this.dispose();
+                    break;
+                //mensagem de erro porque não existe usuario ou perfil incorreto
+                default: //JOptionPane.showMessageDialog(null, "Algo deu errado, verifique o login e senha.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    jLabel5.setVisible(true);
+
+                    break;
             }
-            else{
-                tfSenha.setText("");
-                jLabel5.setVisible(true);
-            }
-        }*/
+        }
+
     }//GEN-LAST:event_tfSenhaKeyPressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -173,22 +198,25 @@ public class TelaLogin extends javax.swing.JFrame {
         int userP = cl.Checkin(tfLogin.getText(), tfSenha.getText());
         switch (userP) {
             //estancia tela principal com cardlayout de Gerente
-            case 1: new TelaInicial("telaGer").setVisible(true);
-                    this.dispose();
-            break;
+            case 1:
+                new TelaInicial("telaGer").setVisible(true);
+                this.dispose();
+                break;
             //estancia tela principal com cardlayout de Recepcionista
-            case 2: new TelaInicial("telaRec").setVisible(true);
-                    this.dispose();
-            break;
+            case 2:
+                new TelaInicial("telaRec").setVisible(true);
+                this.dispose();
+                break;
             //estancia tela principal com cardlayout de Medico
-            case 3: new TelaInicial("telaMed").setVisible(true);
-                    this.dispose();
-            break;
+            case 3:
+                new TelaInicial("telaMed").setVisible(true);
+                this.dispose();
+                break;
             //mensagem de erro porque não existe usuario ou perfil incorreto
             default: //JOptionPane.showMessageDialog(null, "Algo deu errado, verifique o login e senha.", "Erro", JOptionPane.ERROR_MESSAGE);
-                     jLabel5.setVisible(true);
-                
-            break;
+                jLabel5.setVisible(true);
+
+                break;
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -197,6 +225,38 @@ public class TelaLogin extends javax.swing.JFrame {
         new TelaCadUsuario().setVisible(true);
 
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jPanel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyPressed
+        // TODO add your handling code here:
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            ControlLogin cl = new ControlLogin();
+            int userP = cl.Checkin(tfLogin.getText(), tfSenha.getText());
+            switch (userP) {
+                //estancia tela principal com cardlayout de Gerente
+                case 1:
+                    new TelaInicial("telaGer").setVisible(true);
+                    this.dispose();
+                    break;
+                //estancia tela principal com cardlayout de Recepcionista
+                case 2:
+                    new TelaInicial("telaRec").setVisible(true);
+                    this.dispose();
+                    break;
+                //estancia tela principal com cardlayout de Medico
+                case 3:
+                    new TelaInicial("telaMed").setVisible(true);
+                    this.dispose();
+                    break;
+                //mensagem de erro porque não existe usuario ou perfil incorreto
+                default: //JOptionPane.showMessageDialog(null, "Algo deu errado, verifique o login e senha.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    jLabel5.setVisible(true);
+
+                    break;
+            }
+
+        }
+    }//GEN-LAST:event_jPanel1KeyPressed
 
     /**
      * @param args the command line arguments

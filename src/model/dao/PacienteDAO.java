@@ -88,9 +88,9 @@ public class PacienteDAO {
         return pac;
     }
     
-    public boolean alterar (Paciente pac, String oldCPF, String newConv){
+    public boolean alterar (Paciente pac, String oldCPF, String newConvnome, String newConvcob){
         String sql = "UPDATE pacientes SET paccpf = ?, pacnome = ?, pacsexo = ?, pacidade = ?, " +
-                     "cod_conv = (SELECT convcod FROM convenios WHERE convnome = " + newConv + ")" +
+                     "cod_conv = (SELECT convcod FROM convenios WHERE convnome = ? AND convcober = ?)" +
                      " WHERE paccpf = " + oldCPF;
         PreparedStatement stmt = null;
         
@@ -100,10 +100,13 @@ public class PacienteDAO {
             stmt.setString(2, pac.getNome());
             stmt.setString(3, pac.getSexo());
             stmt.setInt(4, pac.getIdade());
+            stmt.setString(5, newConvnome);
+            stmt.setString(6, newConvcob);
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha na Alteração de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+            System.err.println("Erro: " + ex);
             return false;
         }finally {
             ic.closeConnection(con, stmt);

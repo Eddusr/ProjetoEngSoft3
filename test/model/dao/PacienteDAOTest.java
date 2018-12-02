@@ -21,7 +21,7 @@ public class PacienteDAOTest {
     }
 
     @Test
-    //@Ignore
+    @Ignore
     public void inserir() {
         Convenio conv = new Convenio(2, "Amil", "Prata");
         Paciente pac = new Paciente("157456", "Jaqueline", "F", 20, conv);
@@ -50,16 +50,16 @@ public class PacienteDAOTest {
         
     }
     
-    /*@Test
-    @Ignore
+    @Test
     public void update(){
-        Paciente pac = new Paciente("43333177897", "Luiz Roberto", "M", 23);
+        Convenio conv = new Convenio(0, "Amil", "Ouro");
+        Paciente pac = new Paciente("123456", "Andreza", "F", 35, conv);
         PacienteDAO dao = new PacienteDAO("mysql");
-        if (dao.alterar(pac, "43333177897")){
+        if (dao.alterar(pac, "123456", conv.getNome(), conv.getCobertura())){
             System.out.println("Alteracao realizada com sucesso");
         }else
             fail("Erro na alteracao de dados");
-    }*/
+    }
     
     @Test
     @Ignore
