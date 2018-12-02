@@ -85,7 +85,7 @@ public class TelaPrincipalMDI extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Aluno");
+        jMenu2.setText("Material");
 
         jMenuItem1.setText("Cadastrar Material");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
