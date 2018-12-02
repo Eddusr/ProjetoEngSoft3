@@ -5,6 +5,7 @@
  */
 package model.dao;
 
+import java.util.List;
 import model.bean.Material;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -38,7 +39,8 @@ public class MaterialDAOTest {
     public void select (){
     
         MaterialDAO dao = new MaterialDAO("mysql");
-        for (Material m: dao.selecionar()){
+        List<Material> materiais = dao.selecionar();
+        for (Material m: materiais){
             System.out.println("Cod: " + m.getCodigo() + " Nome: " + m.getNome());
         }
     }
@@ -48,7 +50,7 @@ public class MaterialDAOTest {
     public void update (){
         MaterialDAO dao = new MaterialDAO("mysql");
         Material mat = new Material("Agulha");
-       if(dao.alterar(mat, 3)){
+       if(dao.alterar(mat)){
             System.out.println("Deu certo");
            
        }
@@ -58,10 +60,11 @@ public class MaterialDAOTest {
     }
     
     @Test
+    @Ignore
     public void delete (){
     
         MaterialDAO dao = new MaterialDAO("mysql");
-        if (dao.deletar(3)){
+        if (dao.deletar(7)){
             System.out.println("deletado");
         }
         else

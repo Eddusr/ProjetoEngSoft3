@@ -44,9 +44,10 @@ public class ControlPaciente {
         ConvenioDAO dao = new ConvenioDAO("mysql");
         Convenio conv = dao.getconv(convnome, cobertura);
        
-        dao.save(conv);
+        //dao.save(conv);
         Paciente pac = new Paciente(cpf, nome, sexo, idade, conv);
         PacienteDAO dao2 = new PacienteDAO("mysql");
-        return dao2.alterar(pac, oldcpf, convnome);
+        return dao2.alterar(pac, oldcpf, conv.getNome(), conv.getCobertura());
+        
     }
 }

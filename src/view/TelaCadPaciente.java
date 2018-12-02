@@ -50,7 +50,7 @@ public class TelaCadPaciente extends javax.swing.JFrame {
         tfConvenio = new javax.swing.JTextField();
         tfCPF = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         cfSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "M", "F" }));
 
@@ -181,10 +181,11 @@ public class TelaCadPaciente extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tfCobertura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cfSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfConvenio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cfSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfConvenio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
@@ -196,6 +197,7 @@ public class TelaCadPaciente extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tablePacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePacientesMouseClicked
@@ -279,12 +281,16 @@ public class TelaCadPaciente extends javax.swing.JFrame {
             ControlPaciente control2 = new ControlPaciente();
             String oldra = tablePacientes.getValueAt(tablePacientes.getSelectedRow(), 0).toString();
             if (!(control2.update(tfCPF.getText(), tfNome.getText(), cfSexo.getSelectedItem().toString(), Integer.parseInt(tfIdade.getText()), tfConvenio.getText(), tfCobertura.getText(), oldra))){
-                JOptionPane.showMessageDialog(null, "Erro ao cadastrar paciente.");
+                //JOptionPane.showMessageDialog(null, "Erro ao cadastrar paciente.");
             }
             else {
                 DefaultTableModel dtmPacientes = (DefaultTableModel) tablePacientes.getModel();
                 Object[] dados = {tfCPF.getText(), tfNome.getText(), tfIdade.getText(), cfSexo.getSelectedItem(), tfConvenio.getText(), tfCobertura.getText()};
-                dtmPacientes.addRow(dados);
+                if (tablePacientes.getSelectedRow() != -1){
+                    dtmPacientes.insertRow(tablePacientes.getSelectedRow(), dados);
+                    dtmPacientes.removeRow(tablePacientes.getSelectedRow()+ 1);
+                }
+                    //dtmPacientes.addRow(dados);
             }
             
         }

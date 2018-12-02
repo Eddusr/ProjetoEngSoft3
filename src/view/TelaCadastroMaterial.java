@@ -41,8 +41,6 @@ public class TelaCadastroMaterial extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        tfcadCodigo = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableCadastro = new javax.swing.JTable();
 
@@ -76,14 +74,6 @@ public class TelaCadastroMaterial extends javax.swing.JInternalFrame {
         jLabel5.setForeground(new java.awt.Color(255, 51, 51));
         jLabel5.setText("Cadastro realizado com sucesso!");
 
-        jLabel6.setText("Codigo");
-
-        tfcadCodigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfcadCodigoActionPerformed(evt);
-            }
-        });
-
         tableCadastro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -107,31 +97,23 @@ public class TelaCadastroMaterial extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(274, 274, 274)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 461, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfcadCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfcadNome, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(tfcadNome, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel1))
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfcadCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfcadNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(tfcadNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -140,7 +122,7 @@ public class TelaCadastroMaterial extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -162,9 +144,8 @@ public class TelaCadastroMaterial extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         Material material = new Material();
-        MaterialDAO dao = new MaterialDAO();
+        MaterialDAO dao = new MaterialDAO("mysql");
         
-        material.setCodigo(Integer.parseInt(tfcadCodigo.getText()));
         material.setNome(tfcadNome.getText());
         
         if (!dao.save(material)) {
@@ -173,11 +154,10 @@ public class TelaCadastroMaterial extends javax.swing.JInternalFrame {
 
             //Colocando Codigo e NOME do ultimo material cadastrado na Tabela e limpando os campos
             DefaultTableModel dtmCadastro = (DefaultTableModel) tableCadastro.getModel();
-            Object[] dados = {tfcadCodigo.getText(), tfcadNome.getText()};
+            Object[] dados = {tfcadNome.getText()};
             tableCadastro.setVisible(true);
             dtmCadastro.addRow(dados);
             
-            tfcadCodigo.setText(null);
             tfcadNome.setText(null);
             jLabel5.setVisible(true);
         }
@@ -189,10 +169,6 @@ public class TelaCadastroMaterial extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void tfcadCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfcadCodigoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfcadCodigoActionPerformed
-
     private void tfcadNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfcadNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfcadNomeActionPerformed
@@ -203,12 +179,10 @@ public class TelaCadastroMaterial extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tableCadastro;
-    private javax.swing.JTextField tfcadCodigo;
     private javax.swing.JTextField tfcadNome;
     // End of variables declaration//GEN-END:variables
 }
