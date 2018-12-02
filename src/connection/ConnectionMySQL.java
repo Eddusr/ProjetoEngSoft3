@@ -30,7 +30,7 @@ public class ConnectionMySQL extends ConnectionInterface{
         try {
             //Class.forName("DriverManager");
             Class.forName("com.mysql.jdbc.Driver"); 
-            return DriverManager.getConnection("jdbc:mysql://localhost/bdclinica","root","1234");
+            return DriverManager.getConnection("jdbc:mysql://localhost/bdclinica","root","");
 
             
         } catch (ClassNotFoundException | SQLException ex) {
