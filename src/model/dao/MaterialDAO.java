@@ -11,111 +11,100 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
-import model.bean.Convenio;
-import model.bean.Paciente;
+import model.bean.Material;
 
 /**
  *
- * @author Eduardo
+ * @author Luiz Oliveira
  */
-public class PacienteDAO {
+public class MaterialDAO {
     final private String nomeDB;
     public ConnectionInterface ic;
     private Connection con;
 
-    public PacienteDAO() {
+    public MaterialDAO() {
         this.nomeDB = null;
         ConnectionFactory cf = new ConnectionFactory();
         this.ic = cf.getDB("");
     }
     
-    public PacienteDAO(String nome) {
+    public MaterialDAO(String nome) {
         this.nomeDB = nome;
         ConnectionFactory cf = new ConnectionFactory();
         this.ic = cf.getDB(nome);
         this.con = ic.getConnection();
     }
     
-    public boolean save(Paciente paciente) {
-        String sql = "INSERT INTO pacientes (paccpf, pacnome, pacsexo, pacidade, cod_conv)" +
-                     "VALUES (?, ?, ?, ?, ?)";
+    public boolean save (Material mat){
+        String sql = "INSERT INTO materiais " +
+                     "(matnome) VALUES (?)";
         PreparedStatement stmt = null;
+        
         try {
             stmt = con.prepareStatement(sql);
-            stmt.setString(1, paciente.getCpf());
-            stmt.setString(2, paciente.getNome());
-            stmt.setString(3, paciente.getSexo());
-            stmt.setInt(4, paciente.getIdade());
-            stmt.setInt(5, paciente.getConvenio().getCodigo());
-            
+            stmt.setString(1, mat.getNome());
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            System.err.println("Erro: " + ex);
+            JOptionPane.showMessageDialog(null, "Falha na Inserção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+            System.err.println("Erro: "+ex);
             return false;
         } finally {
             ic.closeConnection(con, stmt);
         }
     }
     
-    public Paciente selecionar (String campo1){
-        Paciente pac = new Paciente();
-        String sql = "SELECT * FROM selectpac "
-                + "WHERE paccpf = " + campo1;
+    public List<Material> selecionar (){
+        
+        String sql = "SELECT * FROM materiais";
+        List<Material> materiais = new ArrayList<>();
         PreparedStatement stmt = null;
         ResultSet rs = null;
+        
         try {
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
             while(rs.next()){
-                pac.setCpf(rs.getString("paccpf"));
-                pac.setNome(rs.getString("pacnome"));
-                pac.setSexo(rs.getString("pacsexo"));
-                pac.setIdade(rs.getInt("pacidade"));
-                Convenio conv = new Convenio();
-                conv.setCodigo(rs.getInt("convcod"));
-                conv.setNome(rs.getString("convnome"));
-                conv.setCobertura(rs.getString("convcober"));
-                pac.setConvenio(conv);
-                
+                Material mat = new Material();
+                mat.setCodigo(rs.getInt("matcod"));
+                mat.setNome(rs.getString("matnome"));
+                materiais.add(mat);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Falha na Seleção do Paciente.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falha na seleção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
         } finally {
             ic.closeConnection(con, stmt, rs);
         }
-        return pac;
+        return materiais;
     }
     
-    public boolean alterar (Paciente pac, String oldCPF, String newConv){
-        String sql = "UPDATE pacientes SET paccpf = ?, pacnome = ?, pacsexo = ?, pacidade = ?, " +
-                     "cod_conv = (SELECT convcod FROM convenios WHERE convnome = " + newConv + ")" +
-                     " WHERE paccpf = " + oldCPF;
-        PreparedStatement stmt = null;
+    public boolean alterar (Material mat, int altCod){
         
+        String sql = "UPDATE materiais " +
+                     "SET matnome = ? " +
+                     "WHERE matcod = " + altCod;
+        PreparedStatement stmt = null;
         try {
             stmt = con.prepareStatement(sql);
-            stmt.setString(1, pac.getCpf());
-            stmt.setString(2, pac.getNome());
-            stmt.setString(3, pac.getSexo());
-            stmt.setInt(4, pac.getIdade());
+            stmt.setString(1, mat.getNome());
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha na Alteração de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
             return false;
-        }finally {
+        } finally {
             ic.closeConnection(con, stmt);
+            
         }
-        
     }
     
-    public boolean deletar(String delCPF) {
-
-        String sql = "DELETE FROM pacientes "
-                + "WHERE paccpf = " + delCPF;
+    public boolean deletar (int delCod){
         
+        String sql = "DELETE FROM materiais " +
+                     "WHERE matcod = " + delCod;
         PreparedStatement stmt = null;
         try {
             stmt = con.prepareStatement(sql);
@@ -123,11 +112,11 @@ public class PacienteDAO {
             return true;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha ao deletar dados.", "Erro", JOptionPane.ERROR_MESSAGE);
-            System.err.println("Erro: " + ex);
+            System.err.println("Erro: " + ex);            
             return false;
         } finally {
             ic.closeConnection(con, stmt);
+            
         }
-        
     }
 }

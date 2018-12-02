@@ -17,7 +17,6 @@ public class Exame {
     private String nome;
     private String descricao;
     private String tipo;
-    private List<Material> materiais;
 
     public Exame() {
     }
@@ -27,7 +26,6 @@ public class Exame {
         this.nome = nome;
         this.descricao = descricao;
         this.tipo = tipo;
-        this.materiais = materiais;
     }
 
     
@@ -55,16 +53,5 @@ public class Exame {
     }
     public void setTipo(String tipo) {
         this.tipo = tipo;
-    }
-
-    public List<Material> getMateriais() {
-        return materiais;
-    }
-
-    public void setMateriais(List<Material> materiais) {
-        this.materiais = materiais;
-    }
-    
-    
-
+    }   
 }

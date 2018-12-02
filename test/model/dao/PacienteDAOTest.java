@@ -5,6 +5,7 @@
  */
 package model.dao;
 
+import model.bean.Convenio;
 import model.bean.Paciente;
 import static org.junit.Assert.fail;
 import org.junit.Ignore;
@@ -20,10 +21,10 @@ public class PacienteDAOTest {
     }
 
     @Test
-    @Ignore
+    //@Ignore
     public void inserir() {
-        
-        Paciente pac = new Paciente("43333177897", "Luiz", "M", 24);
+        Convenio conv = new Convenio(2, "Amil", "Prata");
+        Paciente pac = new Paciente("157456", "Jaqueline", "F", 20, conv);
         PacienteDAO dao = new PacienteDAO("mysql");
         
         if(dao.save(pac)){
@@ -49,7 +50,7 @@ public class PacienteDAOTest {
         
     }
     
-    @Test
+    /*@Test
     @Ignore
     public void update(){
         Paciente pac = new Paciente("43333177897", "Luiz Roberto", "M", 23);
@@ -58,9 +59,10 @@ public class PacienteDAOTest {
             System.out.println("Alteracao realizada com sucesso");
         }else
             fail("Erro na alteracao de dados");
-    }
+    }*/
     
     @Test
+    @Ignore
     public void delete (){
     
         PacienteDAO dao = new PacienteDAO("mysql");

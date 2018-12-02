@@ -64,6 +64,7 @@ public class MedicoDAOTest {
     }
     
     @Test
+    @Ignore
     public void delete (){
     
         MedicoDAO dao = new MedicoDAO("mysql");

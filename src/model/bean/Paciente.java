@@ -15,25 +15,20 @@ public class Paciente {
     private String nome;
     private String sexo;
     private int idade;
+    private Convenio convenio;
     //private Telefone telefone;
-        
+
     public Paciente() {
-        this.cpf = "";
-        this.nome = "";
-        this.idade = 0;
-    }   
-    public Paciente( String cpf, String nome, String sexo, int idade ) {
+    }
+
+    public Paciente(String cpf, String nome, String sexo, int idade, Convenio convenio) {
         this.cpf = cpf;
         this.nome = nome;
         this.sexo = sexo;
         this.idade = idade;
+        this.convenio = convenio;
     }
-    public Paciente( Paciente a ) {
-        this.cpf = a.cpf;
-        this.nome = a.nome;
-        this.sexo = a.sexo;
-        this.idade = a.idade;
-    }
+
 
     public String getCpf() {
         return cpf;
@@ -62,4 +57,13 @@ public class Paciente {
     public void setIdade(int idade) {
         this.idade = idade;
     }
+
+    public Convenio getConvenio() {
+        return convenio;
+    }
+
+    public void setConvenio(Convenio convenio) {
+        this.convenio = convenio;
+    }
+    
 }

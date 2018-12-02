@@ -16,19 +16,12 @@ public class Convenio {
     private String cobertura;
 
     public Convenio() {
-        this.codigo = 0;
-        this.nome = "";
-        this.cobertura = "";
     }
+    
     public Convenio(int codigo, String nome, String cobertura) {
         this.codigo = codigo;
         this.nome = nome;
         this.cobertura = cobertura;
-    }
-    public Convenio(Convenio a) {
-        this.codigo = a.codigo;
-        this.nome = a.nome;
-        this.cobertura = a.cobertura;
     }
 
     public Convenio(int i, String psicologo) {

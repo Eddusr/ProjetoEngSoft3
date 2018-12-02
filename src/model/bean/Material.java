@@ -15,16 +15,10 @@ public class Material {
     private String nome;
 
     public Material() {
-        this.codigo = 0;
         this.nome = "";
     }
-    public Material(int codigo, String nome) {
-        this.codigo = codigo;
+    public Material(String nome) {
         this.nome = nome;
-    }
-    public Material(Material a) {
-        this.codigo = a.codigo;
-        this.nome = a.nome;
     }
 
     public int getCodigo() {
