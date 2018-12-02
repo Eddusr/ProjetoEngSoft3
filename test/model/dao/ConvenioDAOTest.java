@@ -59,6 +59,7 @@ public class ConvenioDAOTest {
     }
     
     @Test
+    @Ignore
     public void delete (){
     
         ConvenioDAO dao = new ConvenioDAO("mysql");
@@ -69,5 +70,14 @@ public class ConvenioDAOTest {
         else
             fail("Falha ao deletar");
         
+    }
+    
+    @Test
+    public void getconv (){
+    
+        ConvenioDAO dao = new ConvenioDAO("mysql");
+        Convenio conv = new Convenio(0, "Amil", "Prata");
+        Convenio convenio = dao.getconv(conv.getNome(), conv.getCobertura());
+        System.out.println(""+ convenio.getNome()+ " "+ convenio.getCobertura());
     }
 }

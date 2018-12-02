@@ -16,39 +16,46 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.bean.Convenio;
+import model.bean.Consulta;
+import model.bean.Medico;
+import model.bean.Paciente;
 
 /**
  *
  * @author Luiz Oliveira
  */
-public class ConvenioDAO {
+public class ConsultaDAO {
+    
     final private String nomeDB;
     public ConnectionInterface ic;
     private Connection con;
 
-    public ConvenioDAO () {
+    public ConsultaDAO () {
         this.nomeDB = null;
         ConnectionFactory cf = new ConnectionFactory();
         this.ic = cf.getDB("");
     }
     
-    public ConvenioDAO (String nome) {
+    public ConsultaDAO (String nome) {
         this.nomeDB = nome;
         ConnectionFactory cf = new ConnectionFactory();
         this.ic = cf.getDB(nome);
         this.con = ic.getConnection();
     }
     
-    public boolean save (Convenio conv){
-        String sql = "INSERT IGNORE INTO convenios (convnome, convcober) " + 
-                     "VALUES (?, ?)";
-        PreparedStatement stmt = null;
+    public boolean save (Consulta cons){
         
+        String sql = "INSERT INTO consultas " +
+                     "(consdata, conshora, consstatus, cons_paccpf, cons_medcrm) "+
+                     "VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement stmt = null;
         try {
             stmt = con.prepareStatement(sql);
-            stmt.setString(1, conv.getNome());
-            stmt.setString(2, conv.getCobertura());
+            stmt.setString(1, cons.getData());
+            stmt.setString(2, cons.getHora());
+            stmt.setString(3, cons.getStatus());
+            stmt.setString(4, cons.getPaciente().getCpf());
+            stmt.setString(5, cons.getMedico().getCrm());
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -58,12 +65,20 @@ public class ConvenioDAO {
         } finally {
             ic.closeConnection(con, stmt);
         }
-        
     }
     
-    public List<Convenio> selecionar (){
-        String sql = "SELECT * FROM convenios";
-        List<Convenio> convenios = new ArrayList<>();
+    public List<Consulta> selecionar (String campoSel){
+        
+        List<Consulta> consultas = new ArrayList<>();
+        String sql;
+        if (campoSel.contains("/")){
+            sql = "SELECT * FROM consultas "+
+                  "WHERE cons_medcrm = " + campoSel;
+        }
+        else{
+            sql = "SELECT * FROM consultas "+
+                  "WHERE cons_paccpf = " + campoSel;
+        }
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
@@ -71,60 +86,41 @@ public class ConvenioDAO {
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
             while(rs.next()){
-                Convenio conv = new Convenio();
-                conv.setCodigo(rs.getInt("convcod"));
-                conv.setNome(rs.getString("convnome"));
-                conv.setCobertura(rs.getString("convcober"));
-                convenios.add(conv);
+                Consulta cons = new Consulta();
+                cons.setCodigo(rs.getInt("conscod"));
+                cons.setData(rs.getString("consdata"));
+                cons.setHora(rs.getString("conshora"));
+                cons.setStatus(rs.getString("consstatus"));
+                Paciente pac = new Paciente();
+                pac.setCpf(rs.getString("cons_paccpf"));
+                cons.setPaciente(pac);
+                Medico med = new Medico();
+                med.setCrm(rs.getString("cons_medcrm"));
+                cons.setMedico(med);
+                consultas.add(cons);
             }
-                    
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha na seleção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
             System.err.println("Erro: " + ex);
         } finally {
             ic.closeConnection(con, stmt, rs);
         }
-        return convenios;       
+        return consultas;        
     }
     
-    public Convenio getconv (String nome, String cobertura){
-        String sql = "SELECT * FROM convenios "+
-                     "WHERE convnome = ? AND convcober = ?";
+    public boolean alterar (Consulta cons){
+        
+        String sql = "UPDATE consultas "+
+                     "SET consdata = ?, conshora = ?, consstatus = ? "+
+                     "WHERE conscod = ?";
         PreparedStatement stmt = null;
-        ResultSet rs = null;
-        Convenio conv = new Convenio();
         
         try {
             stmt = con.prepareStatement(sql);
-            stmt.setString(1, nome);
-            stmt.setString(2, cobertura);
-            rs = stmt.executeQuery();
-            while(rs.next()){
-                conv.setCodigo(rs.getInt("convcod"));
-                conv.setNome(rs.getString("convnome"));
-                conv.setCobertura(rs.getString("convcober"));
-            }
-                    
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Falha na seleção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
-            System.err.println("Erro: " + ex);
-        } finally {
-            ic.closeConnection(con, stmt, rs);
-        }
-        return conv;
-        
-    }
-    
-    public boolean alterar (Convenio conv, int cod){
-        String sql = "UPDATE convenios " +
-                     "SET convnome = ?, convcober = ? " +
-                     "WHERE convcod = " + cod;
-        
-        PreparedStatement stmt = null;
-        try {
-            stmt = con.prepareStatement(sql);
-            stmt.setString(1, conv.getNome());
-            stmt.setString(2, conv.getCobertura());
+            stmt.setString(1, cons.getData());
+            stmt.setString(2, cons.getHora());
+            stmt.setString(3, cons.getStatus());
+            stmt.setInt(4, cons.getCodigo());
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -136,10 +132,10 @@ public class ConvenioDAO {
         }
     }
     
-    public boolean deletar(int delCOD) {
-
-        String sql = "DELETE FROM convenios "
-                + "WHERE convcod = " + delCOD;
+    public boolean deletar (int delCod){
+        
+        String sql = "DELETE FROM consultas " +
+                     "WHERE conscod = " + delCod;
         
         PreparedStatement stmt = null;
         try {
@@ -153,6 +149,5 @@ public class ConvenioDAO {
         } finally {
             ic.closeConnection(con, stmt);
         }
-        
     }
 }

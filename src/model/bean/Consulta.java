@@ -5,6 +5,8 @@
  */
 package model.bean;
 
+import java.util.List;
+
 /**
  *
  * @author Eduardo
@@ -13,26 +15,28 @@ public class Consulta {
     private int codigo;
     private String data;
     private String hora;
+    private String status;
     private Paciente paciente;
     private Medico medico;
-    //private Exame exame;
-    //private Material material;
+    private List<Exame> exames;
+    private List<Material> materiais;
 
     public Consulta() {
-        this.codigo = 0;
-        this.data = "";
-        this.hora = "";
     }
-    public Consulta(int codigo, String data, String hora) {
+
+    public Consulta(int codigo, String data, String hora, Paciente paciente, String status, Medico medico, List<Exame> exames, List<Material> materiais) {
         this.codigo = codigo;
         this.data = data;
         this.hora = hora;
+        this.status = status;
+        this.paciente = paciente;
+        this.medico = medico;
+        this.exames = exames;
+        this.materiais = materiais;
     }
-    public Consulta(Consulta a) {
-        this.codigo = a.codigo;
-        this.data = a.data;
-        this.hora = a.hora;
-    }
+
+  
+    
 
     public int getCodigo() {
         return codigo;
@@ -63,6 +67,30 @@ public class Consulta {
     }
     public void setMedico(Medico medico) {
         this.medico = medico;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<Exame> getExames() {
+        return exames;
+    }
+
+    public void setExames(List<Exame> exames) {
+        this.exames = exames;
+    }
+
+    public List<Material> getMateriais() {
+        return materiais;
+    }
+
+    public void setMateriais(List<Material> materiais) {
+        this.materiais = materiais;
     }
     
 }
