@@ -16,44 +16,46 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.bean.Exame;
+import model.bean.Cobranca;
+import model.bean.Consulta;
 
 /**
  *
  * @author Luiz Oliveira
  */
-public class ExameDAO {
+public class CobrancaDAO {
 
     final private String nomeDB;
     public ConnectionInterface ic;
     private Connection con;
 
-    public ExameDAO() {
+    public CobrancaDAO() {
         this.nomeDB = null;
         ConnectionFactory cf = new ConnectionFactory();
         this.ic = cf.getDB("");
     }
 
-    public ExameDAO(String nome) {
+    public CobrancaDAO(String nome) {
         this.nomeDB = nome;
         ConnectionFactory cf = new ConnectionFactory();
         this.ic = cf.getDB(nome);
         this.con = ic.getConnection();
     }
 
-    public boolean save(Exame ex) {
-
-        String sql = "INSERT IGNORE INTO exames (examenome, examedesc, exametip) "
-                + "VALUES (? ,? ,?)";
+    public boolean save(Cobranca cobranca) {
+        String sql = "INSERT INTO cobrancas (cobvalorparc, cobnumparc, cob_conscod, cobvalor)"
+                + "VALUES (?, ?, ?, ?)";
         PreparedStatement stmt = null;
         try {
             stmt = con.prepareStatement(sql);
-            stmt.setString(1, ex.getNome());
-            stmt.setString(2, ex.getDescricao());
-            stmt.setString(3, ex.getTipo());
+            stmt.setDouble(1, cobranca.getParcela());
+            stmt.setInt(2, cobranca.getNumparcela());
+            stmt.setInt(3, cobranca.getConsulta().getCodigo());
+            stmt.setDouble(4, cobranca.getValor());
+
             stmt.executeUpdate();
             return true;
-        } catch (SQLException ex1) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha na Inserção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
             System.err.println("Erro: " + ex);
             return false;
@@ -62,23 +64,24 @@ public class ExameDAO {
         }
     }
 
-    public List<Exame> selecionar() {
+    public List<Cobranca> selecionar() {
 
-        String sql = "SELECT * FROM exames";
-        List<Exame> exames = new ArrayList<>();
+        String sql = "SELECT * FROM cobrancas";
+
+        List<Cobranca> cobrancas = new ArrayList<>();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-
         try {
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                Exame ex = new Exame();
-                ex.setCodigo(rs.getInt("examecod"));
-                ex.setNome(rs.getString("examenome"));
-                ex.setDescricao(rs.getString("examedesc"));
-                ex.setTipo(rs.getString("exametipo"));
-                exames.add(ex);
+                Cobranca cob = new Cobranca();
+                cob.setParcela(rs.getDouble("cobvalorparc"));
+                cob.setNumparcela(rs.getInt("cobnumparc"));
+                Consulta cons = new Consulta();
+                cons.setCodigo(rs.getInt("cons_cod"));
+                cob.setConsulta(cons);
+                cobrancas.add(cob);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha na seleção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -86,51 +89,54 @@ public class ExameDAO {
         } finally {
             ic.closeConnection(con, stmt, rs);
         }
-        return exames;
+        return cobrancas;
     }
 
-    public Exame selecionarUm(int exCod) {
-
-        String sql = "SELECT * FROM exames "
-                + "WHERE examecod = " + exCod;
+    public Cobranca selectUm(int consCod) {
+        String sql = "SELECT * FROM cobrancas "
+                + "WHERE cob_conscod = ?";
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Exame exam = new Exame();
+        Cobranca cob = new Cobranca();
 
         try {
             stmt = con.prepareStatement(sql);
+            stmt.setInt(1, consCod);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                exam.setCodigo(rs.getInt("examecod"));
-                exam.setNome(rs.getString("examenome"));
-                exam.setDescricao(rs.getString("examedesc"));
-                exam.setTipo(rs.getString("exametipo"));
+                cob.setCodigo(rs.getInt("cobcod"));
+                cob.setNumparcela(rs.getInt("cobnumparc"));
+                cob.setParcela(rs.getDouble("cobvalorparc"));
+                cob.setValor(rs.getDouble("cobvalor"));
+                Consulta cons = new Consulta();
+                cons.setCodigo(rs.getInt("cob_conscod"));
+                cob.setConsulta(cons);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Falha na seleção de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
             System.err.println("Erro: " + ex);
         } finally {
             ic.closeConnection(con, stmt, rs);
         }
-        return exam;
+        return cob;
+
     }
 
-    public boolean alterar(Exame ex, int altCod) {
-
-        String sql = "UPDATE exames "
-                + "SET examenome = ?, examedesc = ?. exametipo = ? "
-                + "WHERE examecod = " + altCod;
-
+    public boolean alterar(Cobranca cobranca, int cod) {
+        String sql = "UPDATE cobrancas "
+                + "SET cobvalorparc = ?, cobnumparc = ?, cobvalor = ? "
+                + "WHERE cob_conscod = " + cod;
         PreparedStatement stmt = null;
+
         try {
             stmt = con.prepareStatement(sql);
-            stmt.setString(1, ex.getNome());
-            stmt.setString(2, ex.getDescricao());
-            stmt.setString(3, ex.getTipo());
+            stmt.setDouble(1, cobranca.getParcela());
+            stmt.setInt(2, cobranca.getNumparcela());
+            stmt.setDouble(3, cobranca.getValor());
             stmt.executeUpdate();
             return true;
-        } catch (SQLException ex1) {
+
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha na Alteração de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
             System.err.println("Erro: " + ex);
             return false;
@@ -139,12 +145,12 @@ public class ExameDAO {
         }
     }
 
-    public boolean deletar(int delCod) {
+    public boolean deletar(String delCOD) {
 
-        String sql = "DELETE FROM exames "
-                + "WHERE examecod = " + delCod;
+        String sql = "DELETE FROM cobrancas "
+                + "WHERE cob_conscod = " + delCOD;
+
         PreparedStatement stmt = null;
-
         try {
             stmt = con.prepareStatement(sql);
             stmt.executeUpdate();
@@ -156,5 +162,6 @@ public class ExameDAO {
         } finally {
             ic.closeConnection(con, stmt);
         }
+
     }
 }

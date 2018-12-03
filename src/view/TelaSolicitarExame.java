@@ -7,9 +7,17 @@ package view;
 
 import control.ControlConvenio;
 import control.ControlPaciente;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.bean.Consulta;
+import model.bean.ConsultaExame;
+import model.bean.Exame;
 import model.bean.Paciente;
+import model.dao.ConsultaDAO;
+import model.dao.ConsultaExameDAO;
+import model.dao.ExameDAO;
+import model.dao.PacienteDAO;
 
 /**
  *
@@ -41,18 +49,18 @@ public class TelaSolicitarExame extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        tfCobertura = new javax.swing.JTextField();
+        tfNomeExame = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        tfConvenio = new javax.swing.JTextField();
+        tfExame = new javax.swing.JTextField();
         tfCPF = new javax.swing.JTextField();
         jScrollPane5 = new javax.swing.JScrollPane();
-        tableConsulta2 = new javax.swing.JTable();
+        tableConsultaExame = new javax.swing.JTable();
         jButton6 = new javax.swing.JButton();
-        tfCPF1 = new javax.swing.JTextField();
+        tfConsulta = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
-        tableConsulta3 = new javax.swing.JTable();
+        tableExame = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
 
@@ -128,9 +136,9 @@ public class TelaSolicitarExame extends javax.swing.JFrame {
 
         jLabel1.setText("Nome");
 
-        tfCobertura.addActionListener(new java.awt.event.ActionListener() {
+        tfNomeExame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfCoberturaActionPerformed(evt);
+                tfNomeExameActionPerformed(evt);
             }
         });
 
@@ -141,13 +149,13 @@ public class TelaSolicitarExame extends javax.swing.JFrame {
             }
         });
 
-        tfConvenio.addActionListener(new java.awt.event.ActionListener() {
+        tfExame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfConvenioActionPerformed(evt);
+                tfExameActionPerformed(evt);
             }
         });
 
-        tableConsulta2.setModel(new javax.swing.table.DefaultTableModel(
+        tableConsultaExame.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -170,17 +178,17 @@ public class TelaSolicitarExame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableConsulta2.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableConsultaExame.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableConsulta2MouseClicked(evt);
+                tableConsultaExameMouseClicked(evt);
             }
         });
-        tableConsulta2.addKeyListener(new java.awt.event.KeyAdapter() {
+        tableConsultaExame.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                tableConsulta2KeyReleased(evt);
+                tableConsultaExameKeyReleased(evt);
             }
         });
-        jScrollPane5.setViewportView(tableConsulta2);
+        jScrollPane5.setViewportView(tableConsultaExame);
 
         jButton6.setText("Pesquisar");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -198,7 +206,7 @@ public class TelaSolicitarExame extends javax.swing.JFrame {
             }
         });
 
-        tableConsulta3.setModel(new javax.swing.table.DefaultTableModel(
+        tableExame.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -221,17 +229,17 @@ public class TelaSolicitarExame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableConsulta3.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableExame.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableConsulta3MouseClicked(evt);
+                tableExameMouseClicked(evt);
             }
         });
-        tableConsulta3.addKeyListener(new java.awt.event.KeyAdapter() {
+        tableExame.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                tableConsulta3KeyReleased(evt);
+                tableExameKeyReleased(evt);
             }
         });
-        jScrollPane6.setViewportView(tableConsulta3);
+        jScrollPane6.setViewportView(tableExame);
 
         jButton2.setText("Adicionar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -257,15 +265,15 @@ public class TelaSolicitarExame extends javax.swing.JFrame {
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane5)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(tfConvenio, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfExame, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(tfCobertura)
+                        .addComponent(tfNomeExame)
                         .addGap(18, 18, 18)
                         .addComponent(jButton6)
                         .addGap(29, 29, 29)
                         .addComponent(jButton7))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(tfCPF1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -320,7 +328,7 @@ public class TelaSolicitarExame extends javax.swing.JFrame {
                     .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3)
-                    .addComponent(tfCPF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton5))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -330,8 +338,8 @@ public class TelaSolicitarExame extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfConvenio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfCobertura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfExame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfNomeExame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6)
                     .addComponent(jButton7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
@@ -356,132 +364,145 @@ public class TelaSolicitarExame extends javax.swing.JFrame {
 
     private void tableConsultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableConsultaMouseClicked
 
-        if (tableConsulta.getSelectedRow() != -1){
-            tfCPF.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString());
-            tfNome.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 1).toString());
-          
-            tfConvenio.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 4).toString());
-            tfCobertura.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 5).toString());
+        if (tableConsulta.getSelectedRow() != -1) {
+            tfConsulta.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString());
+            tfCPF.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 1).toString());
+            tfNome.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 2).toString());
         }
     }//GEN-LAST:event_tableConsultaMouseClicked
 
     private void tableConsultaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableConsultaKeyReleased
 
-        if (tableConsulta.getSelectedRow() != -1){
-            tfCPF.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString());
-            tfNome.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 1).toString());
-           
-            tfConvenio.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 4).toString());
-            tfCobertura.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 5).toString());
+        if (tableConsulta.getSelectedRow() != -1) {
+            tfConsulta.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString());
+            tfCPF.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 1).toString());
+            tfNome.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 2).toString());
         }
 
     }//GEN-LAST:event_tableConsultaKeyReleased
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        ControlPaciente control = new ControlPaciente();
-        Paciente pac = control.getPaciente(tfCPF.getText());
-        DefaultTableModel dtmPacientes = (DefaultTableModel) tableConsulta.getModel();
-        Object[] dados = {pac.getCpf(), pac.getNome(), pac.getIdade(), pac.getSexo(), pac.getConvenio().getNome(), pac.getConvenio().getCobertura()};
-        dtmPacientes.addRow(dados);
-        
+        ConsultaDAO dao = new ConsultaDAO("mysql");
+        List<String> campos = dao.selecionarPac(tfCPF.getText());
+        DefaultTableModel dtmConsulta = (DefaultTableModel) tableConsulta.getModel();
+        Object[] dados = new Object[3];
+        for (int i = 0; i < campos.size(); i++) {
+            dados[i] = campos.get(i);
+        }
+        tableConsulta.setVisible(true);
+        dtmConsulta.addRow(dados);
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
-        if (tableConsulta.getSelectedRow() != -1){
-            DefaultTableModel dtmPacientes = (DefaultTableModel) tableConsulta.getModel();
-            ControlPaciente control = new ControlPaciente();
-            control.deletar(tfCPF.getText());
-            dtmPacientes.removeRow(tableConsulta.getSelectedRow());
-        }
-        else
-        JOptionPane.showMessageDialog(null, "Nenhum registo selecionado.");
+        DefaultTableModel dtmConsultas = (DefaultTableModel) tableConsulta.getModel();
+        dtmConsultas.removeRow(tableConsulta.getSelectedRow());
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        ControlConvenio control = new ControlConvenio();
-        if (!(control.save(tfConvenio.getText(), tfCobertura.getText()))){
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar convenio.");
-        }
-        else {
-            ControlPaciente control2 = new ControlPaciente();
-           /* if (!(control2.save(tfCPF.getText(), tfNome.getText(), tfConvenio.getText(), tfCobertura.getText()))){
-                JOptionPane.showMessageDialog(null, "Erro ao cadastrar paciente.");
-            }
-            else {
-                DefaultTableModel dtmPacientes = (DefaultTableModel) tableConsulta.getModel();
-                Object[] dados = {tfCPF.getText(), tfNome.getText(), tfConvenio.getText(), tfCobertura.getText()};
-                dtmPacientes.addRow(dados);
-            }*/
-            
-        }
-            
-        //ControlPaciente control = new ControlPaciente();
         
+        Consulta cons = new Consulta();
+        cons.setCodigo(Integer.parseInt(tfConsulta.getText()));
+        ConsultaExame exam = new ConsultaExame();
+        exam.setCodigo(Integer.parseInt(tfExame.getText()));
+        exam.setData("00/00");
+        exam.setHora("00:00");
+        exam.setConsulta(cons);
+
+        ConsultaExameDAO dao = new ConsultaExameDAO("mysql");
+
+        if (dao.save(exam)) {
+            JOptionPane.showMessageDialog(null, "Exame Solicitado com sucesso.");
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        ControlConvenio control = new ControlConvenio();
-        if (!(control.save(tfConvenio.getText(), tfCobertura.getText()))){
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar convenio.");
-        }
-        else {
-            ControlPaciente control2 = new ControlPaciente();
-            String oldra = tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString();
-          /*  if (!(control2.update(tfCPF.getText(), tfNome.getText(), tfConvenio.getText(), tfCobertura.getText(), oldra))){
-                JOptionPane.showMessageDialog(null, "Erro ao cadastrar paciente.");
-            }
-            else {
-                DefaultTableModel dtmPacientes = (DefaultTableModel) tableConsulta.getModel();
-                Object[] dados = {tfCPF.getText(), tfNome.getText(), tfIdade.getText(), cfSexo.getSelectedItem(), tfConvenio.getText(), tfCobertura.getText()};
-                dtmPacientes.addRow(dados);
-            }*/
-            
-        }
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void tableConsulta2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableConsulta2MouseClicked
+    private void tableConsultaExameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableConsultaExameMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_tableConsulta2MouseClicked
+    }//GEN-LAST:event_tableConsultaExameMouseClicked
 
-    private void tableConsulta2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableConsulta2KeyReleased
+    private void tableConsultaExameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableConsultaExameKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_tableConsulta2KeyReleased
+    }//GEN-LAST:event_tableConsultaExameKeyReleased
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+
+        ExameDAO dao = new ExameDAO("mysql");
+        Exame exam = dao.selecionarUm(Integer.parseInt(tfExame.getText()));
+        DefaultTableModel dtmExames = (DefaultTableModel) tableExame.getModel();
+        Object[] dados = {exam.getCodigo(), exam.getNome(), exam.getDescricao()};
+        tableExame.setVisible(true);
+        dtmExames.addRow(dados);
+
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void tfConvenioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfConvenioActionPerformed
+    private void tfExameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfExameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfConvenioActionPerformed
+    }//GEN-LAST:event_tfExameActionPerformed
 
     private void tfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfNomeActionPerformed
 
-    private void tfCoberturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCoberturaActionPerformed
+    private void tfNomeExameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomeExameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfCoberturaActionPerformed
+    }//GEN-LAST:event_tfNomeExameActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+
+        DefaultTableModel dtmExames = (DefaultTableModel) tableExame.getModel();
+        dtmExames.removeRow(tableExame.getSelectedRow());
+
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void tableConsulta3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableConsulta3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tableConsulta3MouseClicked
+    private void tableExameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableExameMouseClicked
 
-    private void tableConsulta3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableConsulta3KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tableConsulta3KeyReleased
+        if (tableExame.getSelectedRow() != -1) {
+            tfExame.setText(tableExame.getValueAt(tableExame.getSelectedRow(), 0).toString());
+            tfNomeExame.setText(tableExame.getValueAt(tableExame.getSelectedRow(), 1).toString());
+
+        }
+
+    }//GEN-LAST:event_tableExameMouseClicked
+
+    private void tableExameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableExameKeyReleased
+
+        if (tableExame.getSelectedRow() != -1) {
+            tfExame.setText(tableExame.getValueAt(tableExame.getSelectedRow(), 0).toString());
+            tfNomeExame.setText(tableExame.getValueAt(tableExame.getSelectedRow(), 1).toString());
+
+        }
+
+    }//GEN-LAST:event_tableExameKeyReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+
+        DefaultTableModel dtmConsExam = (DefaultTableModel) tableConsultaExame.getModel();
+        Object[] dados = {tfConsulta.getText(), tfExame.getText()};
+        tableConsultaExame.setVisible(true);
+        dtmConsExam.addRow(dados);
+       /* Consulta cons = new Consulta();
+        cons.setCodigo(Integer.parseInt(tfConsulta.getText()));
+        ConsultaExame exam = new ConsultaExame();
+        exam.setCodigo(Integer.parseInt(tfExame.getText()));
+        exam.setConsulta(cons);
+
+        ConsultaExameDAO dao = new ConsultaExameDAO("mysql");
+
+        if (dao.save(exam)) {
+
+        }*/
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -542,12 +563,12 @@ public class TelaSolicitarExame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTable tableConsulta;
-    private javax.swing.JTable tableConsulta2;
-    private javax.swing.JTable tableConsulta3;
+    private javax.swing.JTable tableConsultaExame;
+    private javax.swing.JTable tableExame;
     private javax.swing.JTextField tfCPF;
-    private javax.swing.JTextField tfCPF1;
-    private javax.swing.JTextField tfCobertura;
-    private javax.swing.JTextField tfConvenio;
+    private javax.swing.JTextField tfConsulta;
+    private javax.swing.JTextField tfExame;
     private javax.swing.JTextField tfNome;
+    private javax.swing.JTextField tfNomeExame;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,9 +7,12 @@ package view;
 
 import control.ControlConvenio;
 import control.ControlPaciente;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.bean.Consulta;
 import model.bean.Paciente;
+import model.dao.ConsultaDAO;
 
 /**
  *
@@ -36,21 +39,17 @@ public class TelaRealizarConsulta extends javax.swing.JFrame {
         tableConsulta = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        tfNome = new javax.swing.JTextField();
+        tfCrm = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        tfConsulta = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        tfIdade = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        cfSexo = new javax.swing.JComboBox<>();
+        tfData = new javax.swing.JTextField();
         tfConsulta1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel2.setText("Nome");
+        jLabel2.setText("Crm");
 
         tableConsulta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -94,9 +93,9 @@ public class TelaRealizarConsulta extends javax.swing.JFrame {
             }
         });
 
-        tfNome.addActionListener(new java.awt.event.ActionListener() {
+        tfCrm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfNomeActionPerformed(evt);
+                tfCrmActionPerformed(evt);
             }
         });
 
@@ -116,23 +115,11 @@ public class TelaRealizarConsulta extends javax.swing.JFrame {
             }
         });
 
-        tfConsulta.addActionListener(new java.awt.event.ActionListener() {
+        tfData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfConsultaActionPerformed(evt);
+                tfDataActionPerformed(evt);
             }
         });
-
-        jLabel3.setText("Idade");
-
-        tfIdade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfIdadeActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setText("Sexo");
-
-        cfSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "M", "F" }));
 
         tfConsulta1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,20 +150,12 @@ public class TelaRealizarConsulta extends javax.swing.JFrame {
                     .addComponent(tfConsulta1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfData, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(tfIdade, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(49, 49, 49)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cfSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
+                            .addComponent(tfCrm, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
@@ -187,17 +166,13 @@ public class TelaRealizarConsulta extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cfSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfCrm, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -218,47 +193,49 @@ public class TelaRealizarConsulta extends javax.swing.JFrame {
 
     private void tableConsultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableConsultaMouseClicked
 
-        if (tableConsulta.getSelectedRow() != -1){
-            tfConsulta.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString());
-            tfNome.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 1).toString());
-           
-            cfSexo.setSelectedItem(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 3).toString());
-          
+        if (tableConsulta.getSelectedRow() != -1) {
+            tfData.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString());
+            tfCrm.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 1).toString());
+
+            // cfSexo.setSelectedItem(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 3).toString());
         }
     }//GEN-LAST:event_tableConsultaMouseClicked
 
     private void tableConsultaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableConsultaKeyReleased
 
-        if (tableConsulta.getSelectedRow() != -1){
-            tfConsulta.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString());
-            tfNome.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 1).toString());
-           
-            cfSexo.setSelectedItem(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 3).toString());
-           
+        if (tableConsulta.getSelectedRow() != -1) {
+            tfData.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString());
+            tfCrm.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 1).toString());
+
+            //cfSexo.setSelectedItem(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 3).toString());
         }
 
     }//GEN-LAST:event_tableConsultaKeyReleased
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        ControlPaciente control = new ControlPaciente();
-        Paciente pac = control.getPaciente(tfConsulta.getText());
-        DefaultTableModel dtmPacientes = (DefaultTableModel) tableConsulta.getModel();
-        Object[] dados = {pac.getCpf(), pac.getNome(), pac.getIdade(), pac.getSexo(), pac.getConvenio().getNome(), pac.getConvenio().getCobertura()};
-        dtmPacientes.addRow(dados);
-        
+        ConsultaDAO dao = new ConsultaDAO("mysql");
+        List<String> campos = dao.selecMedCons(tfCrm.getText(), tfData.getText());
+        DefaultTableModel dtmConsulta = (DefaultTableModel) tableConsulta.getModel();
+        Object[] dados = new Object[4];
+        for (int i = 0; i < campos.size(); i++) {
+            dados[i] = campos.get(i);
+        }
+        tableConsulta.setVisible(true);
+        dtmConsulta.addRow(dados);
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
-        if (tableConsulta.getSelectedRow() != -1){
+        if (tableConsulta.getSelectedRow() != -1) {
             DefaultTableModel dtmPacientes = (DefaultTableModel) tableConsulta.getModel();
             ControlPaciente control = new ControlPaciente();
-            control.deletar(tfConsulta.getText());
+            control.deletar(tfData.getText());
             dtmPacientes.removeRow(tableConsulta.getSelectedRow());
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum registo selecionado.");
         }
-        else
-        JOptionPane.showMessageDialog(null, "Nenhum registo selecionado.");
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -280,22 +257,18 @@ public class TelaRealizarConsulta extends javax.swing.JFrame {
             }
             
         }*/
-            
+
         //ControlPaciente control = new ControlPaciente();
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void tfConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfConsultaActionPerformed
+    private void tfDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfDataActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfConsultaActionPerformed
+    }//GEN-LAST:event_tfDataActionPerformed
 
-    private void tfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomeActionPerformed
+    private void tfCrmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCrmActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfNomeActionPerformed
-
-    private void tfIdadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfIdadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfIdadeActionPerformed
+    }//GEN-LAST:event_tfCrmActionPerformed
 
     private void tfConsulta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfConsulta1ActionPerformed
         // TODO add your handling code here:
@@ -361,21 +334,17 @@ public class TelaRealizarConsulta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cfSexo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable tableConsulta;
-    private javax.swing.JTextField tfConsulta;
     private javax.swing.JTextField tfConsulta1;
-    private javax.swing.JTextField tfIdade;
-    private javax.swing.JTextField tfNome;
+    private javax.swing.JTextField tfCrm;
+    private javax.swing.JTextField tfData;
     // End of variables declaration//GEN-END:variables
 }

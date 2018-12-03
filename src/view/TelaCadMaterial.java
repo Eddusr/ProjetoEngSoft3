@@ -214,7 +214,7 @@ public class TelaCadMaterial extends javax.swing.JFrame {
             dtmMateriais.addRow(dados);
             
             tfcadNome.setText(null);
-            jLabel5.setVisible(true);
+            //jLabel5.setVisible(true);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

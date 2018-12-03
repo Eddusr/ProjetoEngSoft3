@@ -7,9 +7,15 @@ package view;
 
 import control.ControlConvenio;
 import control.ControlPaciente;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.bean.Cobranca;
+import model.bean.Consulta;
 import model.bean.Paciente;
+import model.dao.CobrancaDAO;
+import model.dao.ConsultaDAO;
 
 /**
  *
@@ -61,11 +67,11 @@ public class TelaEfetuarPagamento extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Consulta", "Nome", "Convenio", "Cobertura", "Valor Total", "Nº Parcelas"
+                "Consulta", "Nome", "Convenio", "Cobertura", "Valor Total", "Nº Parcelas", "Valor Parcelas"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -108,7 +114,7 @@ public class TelaEfetuarPagamento extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Deletar");
+        jButton5.setText("Limpar Tabela");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -191,32 +197,31 @@ public class TelaEfetuarPagamento extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(tfConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(tfNparcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tfNparcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfNome, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addComponent(tfConsulta))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tfVtotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(tfCobertura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(tfVparcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(tfConvenio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addComponent(tfConvenio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfVtotal, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jButton1)
                     .addComponent(jButton4)
                     .addComponent(jButton5))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -225,93 +230,104 @@ public class TelaEfetuarPagamento extends javax.swing.JFrame {
 
     private void tableConsultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableConsultaMouseClicked
 
-        if (tableConsulta.getSelectedRow() != -1){
+        if (tableConsulta.getSelectedRow() != -1) {
             tfConsulta.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString());
             tfNome.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 1).toString());
-            tfVtotal.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 2).toString());
-           
-            tfConvenio.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 4).toString());
-            tfCobertura.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 5).toString());
+            tfConvenio.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 2).toString());
+            tfCobertura.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 3).toString());
+            tfVtotal.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 4).toString());
+            tfNparcela.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 5).toString());
+            tfVparcela.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 6).toString());
+
         }
     }//GEN-LAST:event_tableConsultaMouseClicked
 
     private void tableConsultaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableConsultaKeyReleased
 
-        if (tableConsulta.getSelectedRow() != -1){
+        if (tableConsulta.getSelectedRow() != -1) {
             tfConsulta.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString());
             tfNome.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 1).toString());
-            tfVtotal.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 2).toString());
-           
-            tfConvenio.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 4).toString());
-            tfCobertura.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 5).toString());
+            tfConvenio.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 2).toString());
+            tfCobertura.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 3).toString());
+            tfVtotal.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 4).toString());
+            tfNparcela.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 5).toString());
+            tfVparcela.setText(tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 6).toString());
+
         }
 
     }//GEN-LAST:event_tableConsultaKeyReleased
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        ControlPaciente control = new ControlPaciente();
-        Paciente pac = control.getPaciente(tfConsulta.getText());
-        DefaultTableModel dtmPacientes = (DefaultTableModel) tableConsulta.getModel();
-        Object[] dados = {pac.getCpf(), pac.getNome(), pac.getIdade(), pac.getSexo(), pac.getConvenio().getNome(), pac.getConvenio().getCobertura()};
-        dtmPacientes.addRow(dados);
+        ConsultaDAO dao = new ConsultaDAO("mysql");
+        List<String> campos = dao.selecionar(Integer.parseInt(tfConsulta.getText()));
+        DefaultTableModel dtmConsulta = (DefaultTableModel) tableConsulta.getModel();
+        Object[] dados = new Object[4];
+        for (int i = 0; i < campos.size(); i++) {
+            dados[i] = campos.get(i);
+        }
+        tableConsulta.setVisible(true);
+        dtmConsulta.addRow(dados);
         
+        CobrancaDAO dao2 = new CobrancaDAO("mysql");
+        Cobranca cob = dao2.selectUm(Integer.parseInt(tfConsulta.getText()));
+        dtmConsulta.setValueAt(cob.getValor(), 0, 4);
+        dtmConsulta.setValueAt(cob.getNumparcela(), 0, 5);
+        dtmConsulta.setValueAt(cob.getParcela(), 0, 6);
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
-        if (tableConsulta.getSelectedRow() != -1){
-            DefaultTableModel dtmPacientes = (DefaultTableModel) tableConsulta.getModel();
-            ControlPaciente control = new ControlPaciente();
-            control.deletar(tfConsulta.getText());
-            dtmPacientes.removeRow(tableConsulta.getSelectedRow());
-        }
-        else
-        JOptionPane.showMessageDialog(null, "Nenhum registo selecionado.");
+       DefaultTableModel dtmConsulta = (DefaultTableModel) tableConsulta.getModel();
+       dtmConsulta.setRowCount(0);
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        ControlConvenio control = new ControlConvenio();
-        if (!(control.save(tfConvenio.getText(), tfCobertura.getText()))){
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar convenio.");
+
+        CobrancaDAO dao = new CobrancaDAO("mysql");
+        Cobranca cob = new Cobranca();
+        Consulta cons = new Consulta();
+        cob.setValor(Double.parseDouble(tfVtotal.getText()));
+        cob.setNumparcela(Integer.parseInt(tfNparcela.getText()));
+        cob.setParcela(Double.parseDouble(tfVparcela.getText()));
+        cons.setCodigo(Integer.parseInt(tfConsulta.getText()));
+        cob.setConsulta(cons);
+        if (!dao.save(cob)) {
+            JOptionPane.showMessageDialog(null, "Erro ao efetuar a cobrança.");
+        } else {
+            DefaultTableModel dtmPacientes = (DefaultTableModel) tableConsulta.getModel();
+            Object[] dados = {tfVtotal.getText(), tfNparcela.getText(), tfVparcela.getText()};
+            tableConsulta.setVisible(true);
+            dtmPacientes.addRow(dados);
+            JOptionPane.showMessageDialog(null, "Cobrança efetuada com sucesso.");
         }
-        else {
-            ControlPaciente control2 = new ControlPaciente();
-         /*/   if (!(control2.save(tfConsulta.getText(), tfNome.getText(), Integer.parseInt(tfVtotal.getText()), tfConvenio.getText(), tfCobertura.getText()))){
-                JOptionPane.showMessageDialog(null, "Erro ao cadastrar paciente.");
-            }
-            else {
-                DefaultTableModel dtmPacientes = (DefaultTableModel) tableConsulta.getModel();
-                Object[] dados = {tfConsulta.getText(), tfNome.getText(), tfVtotal.getText(), tfConvenio.getText(), tfCobertura.getText()};
-                dtmPacientes.addRow(dados);
-            }*/
-            
-        }
-            
-        //ControlPaciente control = new ControlPaciente();
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        ControlConvenio control = new ControlConvenio();
-        if (!(control.save(tfConvenio.getText(), tfCobertura.getText()))){
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar convenio.");
-        }
-        else {
-            ControlPaciente control2 = new ControlPaciente();
-            String oldra = tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0).toString();
-          /*  if (!(control2.update(tfConsulta.getText(), tfNome.getText(), Integer.parseInt(tfVtotal.getText()), tfConvenio.getText(), tfCobertura.getText(), oldra))){
-                JOptionPane.showMessageDialog(null, "Erro ao cadastrar paciente.");
-            }
-            else {
-                DefaultTableModel dtmPacientes = (DefaultTableModel) tableConsulta.getModel();
-                Object[] dados = {tfConsulta.getText(), tfNome.getText(), tfVtotal.getText(), tfConvenio.getText(), tfCobertura.getText()};
-                dtmPacientes.addRow(dados);
-            }*/
-            
+
+        CobrancaDAO dao = new CobrancaDAO("mysql");
+        Cobranca cob = new Cobranca();
+        cob.setValor(Double.parseDouble(tfVtotal.getText()));
+        cob.setNumparcela(Integer.parseInt(tfNparcela.getText()));
+        double tparc = cob.getValor() / cob.getNumparcela();
+        cob.setParcela(tparc);
+        Consulta cons = new Consulta();
+        cons.setCodigo(Integer.parseInt(tfConsulta.getText()));
+        cob.setConsulta(cons);
+        int conscod = Integer.parseInt(tfConsulta.getText());
+        tfVparcela.setText(""+tparc);
+        if (dao.alterar(cob, conscod)) {
+            DefaultTableModel dtmPacientes = (DefaultTableModel) tableConsulta.getModel();
+            Object[] dados = {tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 0),tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 1),
+                              tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 2),tableConsulta.getValueAt(tableConsulta.getSelectedRow(), 3),
+                              tfVtotal.getText(), tfNparcela.getText(), tparc};
+            tableConsulta.setVisible(true);
+            dtmPacientes.insertRow(tableConsulta.getSelectedRow(), dados);
+            dtmPacientes.removeRow(tableConsulta.getSelectedRow() + 1);
+            JOptionPane.showMessageDialog(null, "Cobrança efetuada com sucesso.");
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 

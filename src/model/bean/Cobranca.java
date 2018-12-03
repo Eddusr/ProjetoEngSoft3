@@ -12,25 +12,27 @@ package model.bean;
 public class Cobranca {
     
     private int codigo;
+    private double valor;
     private double parcela;
     private int numparcela;
+    private Consulta consulta;
     //private Convenio convenio;
 
     public Cobranca() {
-        this.codigo = 0;
-        this.parcela = 0.0;
-        this.numparcela = 0;
     }
-    public Cobranca(int codigo, double parcela, int numparcela) {
-        this.codigo = codigo;
+
+    public Cobranca(double valor, double parcela, int numparcela, Consulta consulta) {
+        this.valor = valor;
         this.parcela = parcela;
         this.numparcela = numparcela;
+        this.consulta = consulta;
     }
-    public Cobranca(Cobranca a) {
-        this.codigo = a.codigo;
-        this.parcela = a.parcela;
-        this.numparcela = a.numparcela;
-    }
+
+    
+
+    
+
+    
 
     public int getCodigo() {
         return codigo;
@@ -50,5 +52,23 @@ public class Cobranca {
     public void setNumparcela(int numparcela) {
         this.numparcela = numparcela;
     }
+
+    public Consulta getConsulta() {
+        return consulta;
+    }
+
+    public void setConsulta(Consulta consulta) {
+        this.consulta = consulta;
+    }
+
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+    
     
 }
